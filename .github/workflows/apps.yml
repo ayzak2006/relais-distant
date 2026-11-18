@@ -1,0 +1,98 @@
+# Compile et publie Relais Distant à chaque version (tag v*) :
+# app Windows (.exe, .msi), Linux (.AppImage, .deb), macOS (.dmg), Android (.apk) et agent Mac (.zip).
+name: Apps
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  desktop:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            args: ""
+          - os: ubuntu-22.04
+            args: ""
+          - os: macos-latest
+            args: "--target universal-apple-darwin"
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.os == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+      - name: Dépendances Linux
+        if: matrix.os == 'ubuntu-22.04'
+        run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+      - run: npm ci
+        working-directory: app
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          projectPath: app
+          tagName: ${{ github.ref_type == 'tag' && github.ref_name || '' }}
+          releaseName: "Relais Distant ${{ github.ref_name }}"
+          releaseBody: "Téléchargements ci-dessous. Mode d'emploi : https://github.com/${{ github.repository }}/blob/main/docs/MODE-EMPLOI.md"
+          releaseDraft: false
+          prerelease: false
+          args: ${{ matrix.args }}
+
+  agent-mac:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Compiler l'agent
+        run: INSTALL=0 ./scripts/bundle-mac.sh
+      - run: cd dist && ditto -c -k --keepParent "Relais Distant Agent.app" "Relais-Distant-Agent-macOS.zip"
+      - uses: softprops/action-gh-release@v2
+        if: github.ref_type == 'tag'
+        with:
+          files: dist/Relais-Distant-Agent-macOS.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: agent-mac
+          path: dist/Relais-Distant-Agent-macOS.zip
+
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: 17 }
+      - uses: android-actions/setup-android@v3
+      - name: NDK
+        run: sdkmanager "ndk;27.2.12479018"
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android,armv7-linux-androideabi,x86_64-linux-android,i686-linux-android
+      - run: npm ci
+        working-directory: app
+      - name: Compiler l'APK
+        working-directory: app
+        env:
+          NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/27.2.12479018
+        run: |
+          npx tauri android init --ci
+          npx tauri android build --apk --debug
+          cp "$(find src-tauri/gen/android -name '*.apk' | head -1)" ../Relais-Distant-Android.apk
+      - uses: softprops/action-gh-release@v2
+        if: github.ref_type == 'tag'
+        with:
+          files: Relais-Distant-Android.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android
+          path: Relais-Distant-Android.apk
