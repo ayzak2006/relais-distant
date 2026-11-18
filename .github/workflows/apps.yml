@@ -93,9 +93,9 @@ jobs:
         working-directory: app
       - name: Compiler l'APK
         working-directory: app
-        env:
-          NDK_HOME: ${{ env.ANDROID_HOME }}/ndk/27.2.12479018
         run: |
+          export NDK_HOME="$ANDROID_HOME/ndk/27.2.12479018"
+          ls "$NDK_HOME" > /dev/null
           npx tauri android init --ci
           npx tauri android build --apk --debug
           cp "$(find src-tauri/gen/android -name '*.apk' | head -1)" ../Relais-Distant-Android.apk
