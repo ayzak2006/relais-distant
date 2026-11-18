@@ -91,14 +91,25 @@ jobs:
           targets: aarch64-linux-android,armv7-linux-androideabi,x86_64-linux-android,i686-linux-android
       - run: npm ci
         working-directory: app
-      - name: Compiler l'APK
+      - name: Compiler l'APK (version optimisée, ARM 64 bits)
         working-directory: app
         run: |
           export NDK_HOME="$ANDROID_HOME/ndk/27.2.12479018"
-          ls "$NDK_HOME" > /dev/null
           npx tauri android init --ci
-          npx tauri android build --apk --debug
-          cp "$(find src-tauri/gen/android -name '*.apk' | head -1)" ../Relais-Distant-Android.apk
+          npx tauri android build --apk --target aarch64
+      - name: Signer l'APK
+        env:
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_B64 }}
+          KEY_PASS: ${{ secrets.ANDROID_KEY_PASS }}
+        run: |
+          BT="$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)"
+          UNSIGNED="$(find app/src-tauri/gen/android -name '*release*.apk' | head -1)"
+          echo "$KEYSTORE_B64" | base64 -d > release.jks
+          "$BT/zipalign" -f -p 4 "$UNSIGNED" aligned.apk
+          "$BT/apksigner" sign --ks release.jks --ks-key-alias relais --ks-pass env:KEY_PASS --key-pass env:KEY_PASS --out Relais-Distant-Android.apk aligned.apk
+          "$BT/apksigner" verify Relais-Distant-Android.apk
+          rm -f release.jks
+          ls -la Relais-Distant-Android.apk
       - uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_type == 'tag' && github.ref_name || 'v0.1.0' }}
