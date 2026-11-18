@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#23B068"/>
+      <stop offset="1" stop-color="#0A4F2D"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.3" cy="0.12" r="0.75">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#03210F" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <rect width="1024" height="1024" fill="url(#glow)"/>
+  <g filter="url(#soft)" fill="none" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Écran -->
+    <rect x="196" y="250" width="560" height="380" rx="46" stroke-width="54"/>
+    <path d="M396 760 H556" stroke-width="54"/>
+    <path d="M476 630 V748" stroke-width="54"/>
+  </g>
+  <!-- Téléphone, posé devant le coin de l'écran (fond vert pour le détacher) -->
+  <g filter="url(#soft)">
+    <rect x="606" y="456" width="236" height="372" rx="52" fill="#0E6A3B" stroke="#FFFFFF" stroke-width="44"/>
+    <path d="M690 770 H758" stroke="#FFFFFF" stroke-width="30" stroke-linecap="round"/>
+  </g>
+  <!-- Curseur : on contrôle l'écran à distance -->
+  <path filter="url(#soft)" d="M372 336 L372 538 L420 492 L452 566 L488 550 L456 478 L522 474 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="18" stroke-linejoin="round"/>
+</svg>

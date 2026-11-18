@@ -1,0 +1,19 @@
+{
+  // Relais Distant sur Cloudflare Workers (offre gratuite : rien n'est jamais facturé,
+  // au-delà des quotas quotidiens les requêtes échouent simplement).
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "relais-distant",
+  "main": "src/index.js",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "../web",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "run_worker_first": ["/ws", "/qr.svg", "/healthz"]
+  },
+  "durable_objects": {
+    "bindings": [{ "name": "HUB", "class_name": "Hub" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Hub"] }],
+  "observability": { "enabled": true }
+}

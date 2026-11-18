@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Relais Distant</title>
+  <meta name="color-scheme" content="light dark">
+  <link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/vendor/phosphor.css">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <!-- 1. Connexion : QR code validé par ton téléphone, ou identifiants -->
+  <div class="pc" id="connect">
+    <header class="brand"><span class="brand-mark"><i class="ph ph-desktop"></i></span>Relais Distant</header>
+
+    <main class="pc-main">
+      <section class="pc-copy">
+        <h1>Tes appareils, sur cet écran.</h1>
+        <p>Scanne le code avec ton téléphone pour connecter ce navigateur à ton compte. Rien à installer ici.</p>
+        <ol class="steps">
+          <li><i class="ph ph-device-mobile"></i>Ouvre l'app Relais Distant ou l'appareil photo</li>
+          <li><i class="ph ph-qr-code"></i>Vise le QR code, ou saisis le code à usage unique</li>
+          <li><i class="ph ph-desktop"></i>Choisis l'appareil à contrôler</li>
+        </ol>
+      </section>
+
+      <section class="pc-panel" aria-label="Connexion">
+        <div class="segmented" role="tablist" aria-label="Type de connexion">
+          <button type="button" class="on" data-mode="temp" role="tab"><i class="ph ph-clock"></i>Temporaire</button>
+          <button type="button" data-mode="perm" role="tab"><i class="ph ph-lock-key"></i>Permanente</button>
+        </div>
+        <div class="qr-plate" id="qr"><div class="skeleton"></div></div>
+        <div class="code-box"><span class="faint">ou saisis ce code dans l'app</span><strong class="code-display" id="qr-code">··· ···</strong></div>
+        <p class="qr-caption" id="qr-state"></p>
+
+        <div class="divider">ou</div>
+        <button class="btn btn-quiet btn-block" id="show-login" type="button"><i class="ph ph-user"></i>Se connecter avec mon compte</button>
+        <form id="login-form" autocomplete="off" hidden>
+          <label class="field"><span>Nom d'utilisateur</span>
+            <input id="username" required minlength="3" maxlength="32" autocapitalize="none" spellcheck="false">
+          </label>
+          <label class="field"><span>Mot de passe</span>
+            <input id="password" type="password" required minlength="8" autocomplete="off">
+          </label>
+          <p class="alert" id="error" role="alert"></p>
+          <button type="submit" class="btn btn-primary btn-block" id="login-btn">Se connecter</button>
+          <button type="button" class="btn-link" id="toggle-mode">Pas encore de compte ? En créer un</button>
+        </form>
+      </section>
+    </main>
+
+    <footer class="pc-foot"><i class="ph ph-lock-key"></i>Liaison directe et chiffrée entre ce navigateur et tes appareils.</footer>
+  </div>
+
+  <!-- 2. Appareils du compte -->
+  <div class="shell shell-wide" id="devices-view" hidden>
+    <header class="topbar">
+      <span class="brand"><span class="brand-mark"><i class="ph ph-desktop"></i></span>Relais Distant</span>
+      <div class="account-chip">
+        <span class="avatar" id="avatar"></span>
+        <span class="account-meta"><strong id="who"></strong><small id="who-sub"></small></span>
+        <button class="btn btn-quiet btn-sm" id="logout"><i class="ph ph-sign-out"></i>Se déconnecter</button>
+      </div>
+    </header>
+    <div class="section-head"><h1>Mes appareils</h1></div>
+    <p class="alert" id="dev-error" role="alert"></p>
+    <div class="tiles" id="tiles"></div>
+  </div>
+
+  <script type="module" src="/viewer.js"></script>
+</body>
+</html>

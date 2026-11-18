@@ -1,0 +1,56 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Relais Distant",
+  "version": "0.1.0",
+  "identifier": "com.relaisdistant.client",
+  "build": {
+    "frontendDist": "../ui",
+    "beforeDevCommand": "node ../scripts/sync-ui.mjs",
+    "beforeBuildCommand": "node ../scripts/sync-ui.mjs"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "title": "Relais Distant",
+        "width": 1100,
+        "height": 760,
+        "minWidth": 360,
+        "minHeight": 480,
+        "useHttpsScheme": true
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; connect-src 'self' ipc: http://ipc.localhost https: wss:; img-src 'self' data: blob:; media-src 'self' blob: mediastream:; style-src 'self' 'unsafe-inline'; script-src 'self'"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "category": "Utility",
+    "shortDescription": "Contrôle ton Mac à distance",
+    "longDescription": "Relais Distant : prends le contrôle de ton Mac depuis ton iPhone, iPad, Android, PC Windows ou un autre Mac, d'un simple geste.",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "iOS": {
+      "minimumSystemVersion": "15.0",
+      "developmentTeam": "XXAZZ65WG8"
+    },
+    "android": {
+      "minSdkVersion": 26
+    },
+    "publisher": "Aymen Derbali",
+    "copyright": "© 2026 Aymen Derbali",
+    "homepage": "https://github.com/ayzak2006/relais-distant",
+    "linux": {
+      "deb": {
+        "section": "utils"
+      }
+    }
+  }
+}

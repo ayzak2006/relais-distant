@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Relais Distant</title>
+  <meta name="color-scheme" content="light dark">
+  <link rel="stylesheet" href="shared/vendor/phosphor.css">
+  <link rel="stylesheet" href="shared/style.css">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <!-- Premier lancement : type de connexion, puis méthode (QR code ou identifiant) -->
+  <div class="onboard" id="onboard" hidden>
+    <section class="panel" id="ob-choose">
+      <div class="brand onboard-brand"><span class="brand-mark"><i class="ph ph-desktop"></i></span>Relais Distant</div>
+      <h2>Connecter cet appareil</h2>
+      <p>Comment veux-tu l'utiliser ?</p>
+      <div class="choices">
+        <button class="choice" data-mode="perm">
+          <span class="lead"><i class="ph ph-lock-key"></i></span>
+          <span><strong>Connexion permanente</strong><small>C'est mon appareil : il reste connecté à mon compte.</small></span>
+          <i class="ph ph-caret-down"></i>
+        </button>
+        <button class="choice" data-mode="temp">
+          <span class="lead"><i class="ph ph-clock"></i></span>
+          <span><strong>Connexion temporaire</strong><small>Appareil d'un ami ou partagé : 12 heures, effacée à la fermeture.</small></span>
+          <i class="ph ph-caret-down"></i>
+        </button>
+      </div>
+    </section>
+
+    <section class="panel" id="ob-method" hidden>
+      <div class="ob-top">
+        <button class="icon-btn" id="ob-back" aria-label="Retour"><i class="ph ph-arrow-left"></i></button>
+        <span class="mode-pill" id="ob-mode"></span>
+      </div>
+      <h2>Connecte-toi depuis un autre appareil</h2>
+      <p>Sur un appareil déjà connecté : app Relais Distant, puis Connecter un appareil. Saisis ce code ou scanne le QR code.</p>
+      <div class="code-box"><span class="faint">Code à usage unique</span><strong class="code-display" id="ob-code">··· ···</strong></div>
+      <div class="qr-plate qr-small" id="ob-qr"><div class="skeleton"></div></div>
+      <div class="divider">ou</div>
+      <button class="btn btn-quiet btn-block" id="ob-show-form"><i class="ph ph-user"></i>Utiliser mon identifiant</button>
+      <form id="ob-form" autocomplete="off" hidden>
+        <div class="segmented" role="tablist">
+          <button type="button" class="on" data-auth="login" role="tab">Se connecter</button>
+          <button type="button" data-auth="register" role="tab">Créer un compte</button>
+        </div>
+        <label class="field"><span>Nom d'utilisateur</span><input id="ob-user" required minlength="3" maxlength="32" autocapitalize="none" spellcheck="false"></label>
+        <label class="field"><span>Mot de passe</span><input id="ob-pass" type="password" required minlength="8"></label>
+        <p class="alert" id="ob-error" role="alert"></p>
+        <button class="btn btn-primary btn-block" id="ob-go">Se connecter</button>
+      </form>
+    </section>
+  </div>
+
+  <!-- Mes appareils -->
+  <div class="shell shell-wide" id="home" hidden>
+    <header class="topbar">
+      <span class="brand"><span class="brand-mark"><i class="ph ph-desktop"></i></span>Relais Distant</span>
+      <button class="avatar avatar-btn" id="btn-account" aria-label="Compte"></button>
+    </header>
+
+    <div class="section-head"><h1>Mes appareils</h1><span class="mode-pill" id="temp-pill" hidden></span></div>
+    <p class="alert" id="error" role="alert"></p>
+    <div class="tiles" id="tiles"></div>
+
+    <section class="group" id="link-group">
+      <h3>Ajouter une connexion</h3>
+      <div class="group-list">
+        <button class="row-action" id="btn-link">
+          <span class="lead"><i class="ph ph-scan"></i></span>
+          <span><strong>Connecter un appareil</strong><small id="link-sub">Scanne le code affiché sur son écran</small></span>
+          <i class="ph ph-caret-down"></i>
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <dialog class="sheet" id="sheet"><div class="sheet-body" id="sheet-body"></div></dialog>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

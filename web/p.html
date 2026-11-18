@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Relais Distant</title>
+  <meta name="color-scheme" content="light dark">
+  <link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/vendor/phosphor.css">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="shell" id="page">
+    <header class="topbar"><span class="brand"><span class="brand-mark"><i class="ph ph-desktop"></i></span>Relais Distant</span></header>
+    <section class="panel" id="view"><div class="skeleton"></div></section>
+
+    <section id="devices" hidden>
+      <div class="section-head"><h1>Mes appareils</h1></div>
+      <p class="alert" id="dev-error" role="alert"></p>
+      <div class="tiles" id="tiles"></div>
+      <section class="group">
+        <h3>Compte <span id="who"></span></h3>
+        <div class="group-list">
+          <button class="row-action" id="add"><span class="lead"><i class="ph ph-plus"></i></span><span><strong>Connecter un appareil</strong><small>Avec son code à usage unique</small></span><i class="ph ph-caret-down"></i></button>
+          <button class="row-action" id="password"><span class="lead"><i class="ph ph-key"></i></span><span><strong>Changer le mot de passe</strong><small>Même si tu as oublié l'ancien</small></span><i class="ph ph-caret-down"></i></button>
+          <button class="row-action" id="revoke"><span class="lead"><i class="ph ph-prohibit"></i></span><span><strong>Déconnecter les ordinateurs invités</strong><small>Ceux connectés par QR code</small></span><i class="ph ph-caret-down"></i></button>
+          <button class="row-action" id="logout"><span class="lead"><i class="ph ph-sign-out"></i></span><span><strong>Se déconnecter</strong><small>De ce navigateur</small></span><i class="ph ph-caret-down"></i></button>
+        </div>
+      </section>
+    </section>
+  </div>
+  <script type="module" src="/phone.js"></script>
+</body>
+</html>

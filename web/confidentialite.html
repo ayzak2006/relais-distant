@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Confidentialité · Relais Distant</title>
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/vendor/phosphor.css">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <main class="shell doc">
+    <header class="topbar"><a class="brand" href="/"><span class="brand-mark"><i class="ph ph-desktop"></i></span>Relais Distant</a></header>
+    <h1>Politique de confidentialité</h1>
+    <p class="muted">Dernière mise à jour : 18 novembre 2026</p>
+
+    <h2>En bref</h2>
+    <p>Relais Distant est un logiciel libre et gratuit de contrôle à distance. Il ne contient aucune publicité, aucun traqueur et aucun outil d'analyse. L'image de ton écran, ton clavier et ta souris ne passent jamais par nos serveurs.</p>
+
+    <h2>Ce qui passe en direct entre tes appareils</h2>
+    <p>La vidéo de l'écran et les commandes (souris, clavier, texte collé) circulent directement entre l'appareil qui contrôle et l'appareil contrôlé, chiffrées par WebRTC (DTLS-SRTP). Le relais ne les reçoit pas et ne peut pas les lire.</p>
+
+    <h2>Ce que le relais conserve</h2>
+    <ul>
+      <li><strong>Ton compte</strong> : ton nom d'utilisateur et une empreinte de ton mot de passe (PBKDF2-SHA256). Le mot de passe lui-même n'est jamais enregistré.</li>
+      <li><strong>Tes appareils</strong> : leur nom, leur type (Mac, PC…) et la date de leur dernière connexion, pour afficher « Mes appareils ».</li>
+      <li><strong>Des jetons de connexion</strong> sous forme d'empreinte, pour que tes appareils restent connectés. Les connexions temporaires expirent au bout de 12 heures.</li>
+    </ul>
+    <p>Pendant qu'un appareil est connecté, le relais voit son adresse IP et le type de navigateur, uniquement pour mettre les appareils en relation et te montrer qui demande l'accès. Ces informations ne sont pas conservées après la déconnexion.</p>
+
+    <h2>Ce que nous ne faisons pas</h2>
+    <ul>
+      <li>Aucune vente ni partage de données avec des tiers.</li>
+      <li>Aucun enregistrement de tes sessions, de ton écran ou de ce que tu tapes.</li>
+      <li>Aucune adresse e-mail, aucun numéro de téléphone demandé.</li>
+    </ul>
+
+    <h2>Permissions demandées</h2>
+    <ul>
+      <li><strong>Appareil photo</strong> (iPhone, iPad, Android) : uniquement pour scanner les QR codes de connexion. Aucune image n'est enregistrée ni envoyée.</li>
+      <li><strong>Enregistrement de l'écran et Accessibilité</strong> (Mac, avec Relais Distant Agent) : pour transmettre l'écran et recevoir la souris et le clavier, seulement pendant une session que tu as autorisée.</li>
+    </ul>
+
+    <h2>Hébergement</h2>
+    <p>Le relais public fonctionne sur Cloudflare Workers. Tu peux aussi héberger ton propre relais : le code est libre (licence MIT).</p>
+
+    <h2>Supprimer tes données</h2>
+    <p>Dans l'app, retire un appareil avec le bouton Retirer : ses informations et son accès sont supprimés. Pour supprimer ton compte entier, ouvre une demande sur la page GitHub du projet.</p>
+
+    <h2>Contact</h2>
+    <p>Projet open source d'Aymen Derbali : <a href="https://github.com/ayzak2006/relais-distant">github.com/ayzak2006/relais-distant</a>.</p>
+  </main>
+</body>
+</html>

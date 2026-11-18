@@ -1,0 +1,6 @@
+target
+dist
+app
+**/node_modules
+relay/data
+.github

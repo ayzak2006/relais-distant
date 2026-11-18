@@ -1,0 +1,51 @@
+/* Spécifique à l'app : scanner de QR code (la caméra native s'affiche derrière la page). */
+html.scanning, html.scanning body { background: transparent; }
+html.scanning .shell, html.scanning dialog { visibility: hidden; }
+.scan-ui { position: fixed; inset: 0; display: grid; place-items: center; z-index: 10; pointer-events: none; }
+.scan-ui .frame {
+  width: min(68vmin, 320px); aspect-ratio: 1; border-radius: 28px;
+  border: 3px solid rgba(255, 255, 255, 0.92);
+  box-shadow: 0 0 0 100vmax rgba(6, 8, 7, 0.55);
+}
+.scan-ui p { position: absolute; top: calc(50% + min(34vmin, 160px) + 24px); color: #fff; font-weight: 560; }
+.scan-ui .btn { position: absolute; bottom: max(32px, env(safe-area-inset-bottom)); pointer-events: auto; background: rgba(24, 26, 28, 0.7); color: #fff; }
+
+.avatar-btn { border: 0; cursor: pointer; font: 650 15px "Geist", system-ui, sans-serif; transition: transform 160ms var(--ease); }
+.avatar-btn:active { transform: scale(0.94); }
+.onboard-brand { margin-bottom: 26px; }
+.sheet-body .group-list { margin: 4px 0 16px; }
+
+.choices .choice, .choice {
+  display: grid; grid-template-columns: 40px 1fr auto; gap: 14px; align-items: center; width: 100%;
+  padding: 16px; border-radius: 16px; border: 1px solid var(--line); background: var(--surface-2);
+  color: var(--text); text-align: left; font: inherit; cursor: pointer;
+  transition: transform 160ms var(--ease), border-color 160ms ease;
+}
+.choice:hover { border-color: color-mix(in srgb, var(--line) 40%, var(--accent) 60%); }
+.choice:active { transform: scale(0.985); }
+.choice .lead { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: var(--surface); }
+.choice strong { display: block; font-weight: 600; }
+.choice small { color: var(--text-2); font-size: 13px; }
+.choice .ph-caret-down { transform: rotate(-90deg); color: var(--text-3); font-size: 16px; }
+.ob-top { display: flex; align-items: center; justify-content: space-between; margin: -6px -6px 12px; }
+.mode-pill {
+  display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 999px;
+  background: var(--accent-soft); color: var(--accent); font-size: 13px; font-weight: 560;
+}
+.mode-pill .ph { font-size: 15px; }
+.qr-plate svg { width: 100%; height: 100%; display: block; }
+.copy-row { display: flex; gap: 8px; margin-top: 12px; }
+.copy-row input {
+  flex: 1; min-width: 0; height: 36px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--line);
+  background: var(--surface-2); color: var(--text-2); font: 12px "Geist Mono", ui-monospace, monospace;
+}
+#onboard .choices { display: grid; gap: 12px; margin: 20px 0 4px; }
+.section-head { flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.mode-pill { white-space: nowrap; }
+.code-box { display: grid; justify-items: center; gap: 4px; padding: 16px; margin-bottom: 14px; border-radius: 16px; background: var(--surface-2); }
+.code-box .faint { font-size: 13px; }
+.code-display { font: 600 34px/1.1 "Geist Mono", ui-monospace, monospace; letter-spacing: 0.08em; }
+.qr-small { max-width: 220px; margin: 0 auto; }
+.code-input { font: 600 22px "Geist Mono", ui-monospace, monospace !important; letter-spacing: 0.12em; text-align: center; text-transform: uppercase; }
+.username { font-size: 17px; }
+.btn-link .ph { vertical-align: -3px; }

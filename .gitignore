@@ -1,0 +1,14 @@
+# Compilation
+target/
+dist/
+**/node_modules/
+app/src-tauri/target/
+app/src-tauri/gen/android/
+app/src-tauri/gen/apple/build/
+app/src-tauri/gen/apple/Externals/
+app/ui/shared/
+# Relais local (wrangler dev)
+relay-worker/.wrangler/
+# Réglages locaux
+.claude/
+.DS_Store
